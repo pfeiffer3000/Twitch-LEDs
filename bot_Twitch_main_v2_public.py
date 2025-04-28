@@ -1,10 +1,10 @@
 # This is the main bot guts.
 # It handles signing in to Twitch, reading chat, and sending messages.
 # Thanks to Twitchio for the framework!
-# wled_connect.py is a module that handles communications with the WLED device.
+# wled_connect_public.py is a module that handles communications with the WLED device.
 
 from twitchio.ext import commands, eventsub
-import wled_connect
+import wled_connect_public
 
 
 # === Insert your specific info here =======
@@ -24,7 +24,7 @@ class Bot(commands.Bot):
         self.wled_ip = wled_ip
         
         # Confirm that we can reach the WLED device
-        wled_connect.confirm_wled_ip(self.wled_ip)
+        wled_connect_public.confirm_wled_ip(self.wled_ip)
         
     async def event_ready(self):
         print(f'Logged in as | {self.nick}')
@@ -55,10 +55,10 @@ class Bot(commands.Bot):
     @commands.command(name="LED", aliases=("leds", "led", "light", "lights", "LEDs", "LEDS"))
     async def leds(self, ctx: commands.Context):
         # Get a list of the presets from the WLED device
-        presets = wled_connect.list_presets(self.wled_ip)
+        presets = wled_connect_public.list_presets(self.wled_ip)
 
         # Create a dictionary of preset names and IDs
-        preset_id_names = wled_connect.get_preset_names_ids(presets)
+        preset_id_names = wled_connect_public.get_preset_names_ids(presets)
 
         # Check to see if the !LED command has an argument
         if len(ctx.message.content.split()) > 1:
@@ -79,7 +79,7 @@ class Bot(commands.Bot):
             # If the preset ID is valid, then send the command to the WLED device!
             if preset_id:
                 await ctx.send(f"Setting LED preset {preset_id}: {preset_id_names[preset_id]}")
-                wled_connect.set_to_preset(self.wled_ip, preset_id)
+                wled_connect_public.set_to_preset(self.wled_ip, preset_id)
         
         else:
             await ctx.send("Please provide a preset ID or name.")
