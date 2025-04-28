@@ -26,3 +26,4 @@ Note: Changes in local networks, like power loss or resetting your WiFi router m
 Run the program bot_Twitch_v3.py, and if all goes well, then you’ll have a working connection between your Twitch chat and WLED!
 
 bot_Twitch_v2.py is a version of the bot that runs on the TwitchIO v2 library.
+WELD_presets.json is a copy of the test presets for my own WLED rig. Running bot_Twitch_v2.py, bot_Twich_v3.py, or wled_connect.py will overwrite my version with your own.
